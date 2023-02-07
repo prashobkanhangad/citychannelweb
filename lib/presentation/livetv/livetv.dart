@@ -1,10 +1,13 @@
 import 'package:city_chennel_web/core/constants.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
+import 'package:city_chennel_web/presentation/homepage/youtubetest.dart';
+import 'package:city_chennel_web/presentation/livetv/youtubelive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class Livescreen extends StatelessWidget {
-  const Livescreen({super.key});
+  Livescreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class Livescreen extends StatelessWidget {
                             color: Colors.indigo[600],
                             height: 477.w,
                             width: 848.w,
-                            child: const Center(child: Text('Video Screen')),
+                            child: Youtubelive(videourl: 'https://www.youtube.com/watch?v=sfdc34oWVxI')
                           ),
                         ),
                         Padding(

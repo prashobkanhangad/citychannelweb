@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class NewsinsideScreen extends StatelessWidget {
-  const NewsinsideScreen({super.key});
+  final imageurl;
+  final newstitle;
+  final newsdescription;
+  const NewsinsideScreen(
+      {super.key,
+      required this.imageurl,
+      required this.newsdescription,
+      required this.newstitle});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class NewsinsideScreen extends StatelessWidget {
                             SizedBox(
                               width: ((1150 * .65) - 20).w,
                               child: Text(
-                                ktext,
+                                newstitle,
                                 style: TextStyle(
                                     fontSize: 28.sp,
                                     fontWeight: FontWeight.bold),
@@ -44,14 +51,14 @@ class NewsinsideScreen extends StatelessWidget {
                                 width: ((1150 * .65) - 20).w,
                                 child: Image(
                                     image:
-                                        AssetImage('assets/nepal-edited.jpg'))),
+                                        NetworkImage(imageurl))),
                             SizedBox(
                               height: 10,
                             ),
                             SizedBox(
                               width: ((1150 * .65) - 20).w,
                               child: Text(
-                                ktextnews,
+                                newsdescription,
                                 // overflow: TextOverflow.ellipsis,
                                 // maxLines: 6,
                                 style: TextStyle(fontSize: 19.sp),
@@ -59,7 +66,10 @@ class NewsinsideScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                      ),SizedBox(width: 10.w,),
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
                       Container(
                         // height: 500.w,
                         width: (1150 * .35).w,
@@ -79,30 +89,30 @@ class NewsinsideScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold),
                               ),
                             ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
-                            kasargodcontainer(),
-                            SizedBox(
-                              height: 10.w,
-                            ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
+                            // kasargodcontainer(),
+                            // SizedBox(
+                            //   height: 10.w,
+                            // ),
                           ],
                         ),
                       )

@@ -1,5 +1,10 @@
 import 'package:city_chennel_web/controller/adminhomecontroller.dart';
 import 'package:city_chennel_web/core/constants.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminhomewidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminkasaragodwidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminkeralawidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminlivetvwidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminvideoswidget.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/widgets.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
 import 'package:flutter/material.dart';
@@ -123,11 +128,7 @@ class adminHome extends StatelessWidget {
                               height: 700.w,
                               width: 848.w,
                               child: getcontroller.selectedoption == 0
-                                  ? adminhomewidget(
-                                      picimageforhomenewscard: () =>
-                                          print('object')
-                                      // getcontroller.picimageforhomenewscard,
-                                      )
+                                  ? adminhomewidget()
                                   : getcontroller.selectedoption == 1
                                       ? adminlivetvwidget()
                                       : getcontroller.selectedoption == 2

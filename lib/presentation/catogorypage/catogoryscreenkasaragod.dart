@@ -1,11 +1,17 @@
 import 'package:city_chennel_web/core/constants.dart';
+import 'package:city_chennel_web/model/kasaragodnewsmodel.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
+import 'package:city_chennel_web/presentation/newsinsidescreen/newsinsidescreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class Categoryscreenkasargod extends StatelessWidget {
-  const Categoryscreenkasargod({super.key,});
+  const Categoryscreenkasargod({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -40,65 +46,97 @@ class Categoryscreenkasargod extends StatelessWidget {
                             SizedBox(
                               height: 10.w,
                             ),
-                            ListView.separated(
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    children: [
-                                      SizedBox(
-                                          height: 250.w,
-                                          width: 350.w,
-                                          child: Image(
-                                              fit: BoxFit.cover,
-                                              image: AssetImage(
-                                                  'assets/nepal-edited.jpg'))),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.w),
-                                        height: 250.w,
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              width: 490.w,
-                                              child: Text(
-                                                ktext,
-                                                style: TextStyle(
-                                                    fontSize: 25.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.w,
-                                            ),
-                                            SizedBox(
-                                              width: 490.w,
-                                              // height: 180.w,
-                                              child: Text(
-                                                ktextnews,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 7,
-                                                style:
-                                                    TextStyle(fontSize: 18.sp),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('kasaragodnews')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: Text(
+                                        'Data not available',
                                       ),
-                                    ],
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 12.0.w),
-                                    child: Container(
-                                      height: 1.w,
-                                      color: kgreycolor,
-                                    ),
-                                  );
-                                },
-                                itemCount: 10),
+                                    );
+                                  }
+
+                                  return ListView.separated(
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        final data = kasaragodnewsmodel.fromMap(
+                                            snapshot.data!.docs[index].data());
+                                        return GestureDetector(
+                                          onTap: () => Get.to(NewsinsideScreen(
+                                              imageurl: data.kasaragodimageurl,
+                                              newsdescription: data.kasaragodnewsdescription,
+                                              newstitle: data.kasaragodnewstitle)),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                  height: 250.w,
+                                                  width: 350.w,
+                                                  child: Image(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(data
+                                                          .kasaragodimageurl!))),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.w),
+                                                height: 250.w,
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 490.w,
+                                                      child: Text(
+                                                        data.kasaragodnewstitle!,
+                                                        maxLines: 4,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                            fontSize: 23.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .bold),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.w,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 490.w,
+                                                      // height: 180.w,
+                                                      child: Text(
+                                                        data.kasaragodnewsdescription!,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 6,
+                                                        style: TextStyle(
+                                                            fontSize: 18.sp),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12.0.w),
+                                          child: Container(
+                                            height: 1.w,
+                                            color: kgreycolor,
+                                          ),
+                                        );
+                                      },
+                                      itemCount: snapshot.data!.size < 20
+                                          ? snapshot.data!.size
+                                          : 20);
+                                }),
                             SizedBox(
                               height: 10.w,
                             ),
@@ -112,7 +150,10 @@ class Categoryscreenkasargod extends StatelessWidget {
                           height: 500.w,
                           color: kgreycolor,
                           child: Center(
-                            child: Text('Your ADVT Here', style: TextStyle(fontSize: 14.sp),),
+                            child: Text(
+                              'Your ADVT Here',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
                           ),
                         ),
                       )

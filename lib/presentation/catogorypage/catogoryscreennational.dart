@@ -98,7 +98,7 @@ class Categoryscreennational extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                itemCount: 10),
+                                itemCount: 1),
                             SizedBox(
                               height: 10.w,
                             ),

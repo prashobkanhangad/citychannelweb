@@ -3,6 +3,7 @@ import 'package:city_chennel_web/presentation/catogorypage/catogoryscreenkasarag
 import 'package:city_chennel_web/presentation/catogorypage/catogoryscreenkerala.dart';
 import 'package:city_chennel_web/presentation/catogorypage/catogoryscreennational.dart';
 import 'package:city_chennel_web/presentation/homepage/homepage.dart';
+import 'package:city_chennel_web/presentation/homepage/youtubetest.dart';
 import 'package:city_chennel_web/presentation/livetv/livetv.dart';
 import 'package:city_chennel_web/presentation/login/loginpage.dart';
 import 'package:city_chennel_web/presentation/video/videoscreen.dart';
@@ -13,9 +14,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class kasargodcontainer extends StatelessWidget {
-  const kasargodcontainer({
-    Key? key,
-  }) : super(key: key);
+  final kasargodimage;
+  final kasargodtext;
+  const kasargodcontainer(
+      {Key? key, required this.kasargodimage, required this.kasargodtext})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,12 @@ class kasargodcontainer extends StatelessWidget {
             fit: BoxFit.cover,
             width: 150.w,
             height: 130.w,
-            image: const AssetImage('assets/nepal-edited.jpg')),
+            image: NetworkImage(kasargodimage)),
         Container(
           padding: EdgeInsets.only(left: 10.w),
           width: 221.w,
           child: Text(
-            ktext,
+            kasargodtext,
             overflow: TextOverflow.ellipsis,
             maxLines: 4,
             style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
@@ -42,28 +45,43 @@ class kasargodcontainer extends StatelessWidget {
 }
 
 class keralacontainer extends StatelessWidget {
-  const keralacontainer({
-    Key? key,
-  }) : super(key: key);
+  String keralaimage;
+  String keralatext;
+  String keraladiscription;
+
+  keralacontainer(
+      {Key? key,
+      required this.keralaimage,
+      required this.keralatext,
+      required this.keraladiscription})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 430.w,
+      height: 450.w,
       width: 371.w,
       color: kwhitecolor,
       child: Column(
         children: [
-          const Image(image: AssetImage('assets/nepal-edited.jpg')),
+          Container(
+              height: 245.w,
+              child:
+                  Image(fit: BoxFit.cover, image: NetworkImage(keralaimage))),
           SizedBox(
             height: 8.w,
           ),
           Text(
-            ktext,
+            keralatext,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
             style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
           ),
+          SizedBox(
+            height: 5.w,
+          ),
           Text(
-            ktextnews,
+            keraladiscription,
             overflow: TextOverflow.ellipsis,
             maxLines: 6,
             style: TextStyle(fontSize: 15.sp),
@@ -252,14 +270,16 @@ class headwidget extends StatelessWidget {
                   Icons.facebook,
                   size: 24.sp,
                 ),
-                Icon(
-                  Icons.whatsapp,
+                FaIcon(
+                  FontAwesomeIcons.whatsapp,
                   size: 24.sp,
                 ),
+                // GestureDetector(onTap: () => Get.to(YoutubeAppDemo()),
                 FaIcon(
                   FontAwesomeIcons.youtube,
                   size: 24.sp,
                 ),
+                // ),
                 FaIcon(
                   FontAwesomeIcons.instagram,
                   size: 24.sp,
@@ -268,7 +288,7 @@ class headwidget extends StatelessWidget {
             ),
           ),
           GestureDetector(
-            onTap:  () => Get.to(()=>Livescreen()),
+            onTap: () => Get.to(() => Livescreen()),
             child: Container(
               height: 80.w,
               width: 200.w,
@@ -366,8 +386,8 @@ class bottumwidget extends StatelessWidget {
                       Icons.facebook,
                       size: 24.sp,
                     ),
-                    Icon(
-                      Icons.whatsapp,
+                    FaIcon(
+                      FontAwesomeIcons.whatsapp,
                       size: 24.sp,
                     ),
                     FaIcon(
@@ -392,6 +412,14 @@ class bottumwidget extends StatelessWidget {
         ),
         SizedBox(
           height: 20.w,
+        ),
+        SizedBox(
+            child: Text(
+          'Powered By Tradom Technologies',
+          style: TextStyle(fontSize: 15.w, letterSpacing: 2),
+        )),
+        SizedBox(
+          height: 10,
         ),
       ],
     );
