@@ -2,6 +2,7 @@ import 'package:city_chennel_web/core/constants.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class NewsinsideScreen extends StatelessWidget {
   final imageurl;
@@ -39,9 +40,8 @@ class NewsinsideScreen extends StatelessWidget {
                               width: ((1150 * .65) - 20).w,
                               child: Text(
                                 newstitle,
-                                style: TextStyle(
-                                    fontSize: 28.sp,
-                                    fontWeight: FontWeight.bold),
+                                                       style:GoogleFonts.notoSerifMalayalam(fontSize: 28.sp, fontWeight: FontWeight.w500),
+
                               ),
                             ),
                             SizedBox(
@@ -61,7 +61,7 @@ class NewsinsideScreen extends StatelessWidget {
                                 newsdescription,
                                 // overflow: TextOverflow.ellipsis,
                                 // maxLines: 6,
-                                style: TextStyle(fontSize: 19.sp),
+                                      style:GoogleFonts.notoSerifMalayalam(fontSize: 19.sp, fontWeight: FontWeight.w500),
                               ),
                             )
                           ],

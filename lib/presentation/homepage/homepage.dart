@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:city_chennel_web/controller/adminhomecontroller.dart';
 import 'package:city_chennel_web/controller/homecontroller.dart';
@@ -238,23 +239,28 @@ class homePage extends StatelessWidget {
                                       SizedBox(
                                         height: 8.w,
                                       ),
-                                      Text(
-                                        data.kasaragodnewstitle!,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                        style: TextStyle(
-                                            fontSize: 22.sp,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                      Text(data.kasaragodnewstitle!,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: GoogleFonts.notoSerifMalayalam(
+                                              fontSize: 23.sp,
+                                              fontWeight: FontWeight.w500)
+
+                                          //  TextStyle(
+                                          //     fontSize: 22.sp,
+                                          //     fontWeight: FontWeight.bold,),
+                                          ),
                                       SizedBox(
                                         height: 5.w,
                                       ),
-                                      Text(
-                                        data.kasaragodnewsdescription!,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 6,
-                                        style: TextStyle(fontSize: 15.sp),
-                                      )
+                                      Text(data.kasaragodnewsdescription!,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 6,
+                                          style: GoogleFonts.notoSerifMalayalam(
+                                              fontSize: 16.sp,
+                                              fontWeight: FontWeight.w500)
+                                          // TextStyle(),
+                                          )
                                     ],
                                   ),
                                 );
@@ -296,14 +302,17 @@ class homePage extends StatelessWidget {
                                     SizedBox(
                                       height: 8.w,
                                     ),
-                                    Text(
-                                      data.keralanewstitle!,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 3,
-                                      style: TextStyle(
-                                          fontSize: 22.sp,
-                                          fontWeight: FontWeight.bold),
-                                    ),
+                                    Text(data.keralanewstitle!,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 3,
+                                        style: GoogleFonts.notoSerifMalayalam(
+                                            fontSize: 23.sp,
+                                            fontWeight: FontWeight.w500)
+
+                                        //  TextStyle(
+                                        //     fontSize: 22.sp,
+                                        //     fontWeight: FontWeight.bold),
+                                        ),
                                     SizedBox(
                                       height: 5.w,
                                     ),
@@ -311,7 +320,9 @@ class homePage extends StatelessWidget {
                                       data.keralanewsdescription!,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 6,
-                                      style: TextStyle(fontSize: 15.sp),
+                                      style: GoogleFonts.notoSerifMalayalam(
+                                          fontSize: 16.sp,
+                                          fontWeight: FontWeight.w500),
                                     )
                                   ],
                                 ),
@@ -350,7 +361,7 @@ class homePage extends StatelessWidget {
                                       child: Text(
                                         'Kasargod',
                                         style: TextStyle(
-                                            fontSize: 22.w,
+                                            fontSize: 23.w,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
@@ -425,7 +436,7 @@ class homePage extends StatelessWidget {
                         return Container(
                           padding: const EdgeInsets.only(top: 5),
                           width: 1150.w,
-                          height: 450.w,
+                          height: 410.w,
                           color: kwhitecolor,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -459,8 +470,8 @@ class homePage extends StatelessWidget {
                         width: 1150.w,
                         child: Text(
                           'Programmes',
-                          style: TextStyle(
-                              fontSize: 22.w, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.notoSerifMalayalam(
+                              fontSize: 22.sp, fontWeight: FontWeight.w500),
                         ),
                       ),
                     ],
@@ -495,7 +506,7 @@ class homePage extends StatelessWidget {
                   Container(
                     padding: EdgeInsets.only(top: 5.w),
                     width: 1150.w,
-                    height: 420.w,
+                    height: 360.w,
                     color: kwhitecolor,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -3,6 +3,7 @@ import 'package:city_chennel_web/presentation/homepage/widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Categoryscreennational extends StatelessWidget {
   const Categoryscreennational({super.key,});
@@ -62,10 +63,8 @@ class Categoryscreennational extends StatelessWidget {
                                               width: 490.w,
                                               child: Text(
                                                 ktext,
-                                                style: TextStyle(
-                                                    fontSize: 25.sp,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                                                  style:GoogleFonts.notoSerifMalayalam(fontSize: 25.sp, fontWeight: FontWeight.w500),
+
                                               ),
                                             ),
                                             SizedBox(
@@ -78,8 +77,8 @@ class Categoryscreennational extends StatelessWidget {
                                                 ktextnews,
                                                 overflow: TextOverflow.ellipsis,
                                                 maxLines: 7,
-                                                style:
-                                                    TextStyle(fontSize: 18.sp),
+                                                                             style:GoogleFonts.notoSerifMalayalam(fontSize: 18.sp, fontWeight: FontWeight.w500),
+
                                               ),
                                             )
                                           ],

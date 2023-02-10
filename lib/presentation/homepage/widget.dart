@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class kasargodcontainer extends StatelessWidget {
@@ -36,7 +37,8 @@ class kasargodcontainer extends StatelessWidget {
             kasargodtext,
             overflow: TextOverflow.ellipsis,
             maxLines: 4,
-            style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 20.sp, fontWeight: FontWeight.w500),
           ),
         ),
       ],
@@ -59,7 +61,7 @@ class keralacontainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450.w,
+      height: 410.w,
       width: 371.w,
       color: kwhitecolor,
       child: Column(
@@ -75,7 +77,8 @@ class keralacontainer extends StatelessWidget {
             keralatext,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 23.sp, fontWeight: FontWeight.w500),
           ),
           SizedBox(
             height: 5.w,
@@ -83,8 +86,9 @@ class keralacontainer extends StatelessWidget {
           Text(
             keraladiscription,
             overflow: TextOverflow.ellipsis,
-            maxLines: 6,
-            style: TextStyle(fontSize: 15.sp),
+            maxLines: 3,
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 16.sp, fontWeight: FontWeight.w500),
           )
         ],
       ),
@@ -115,7 +119,7 @@ class national_container extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 420.w,
+      height: 360.w,
       width: 280.w,
       color: Color.fromARGB(255, 255, 255, 255),
       child: Column(
@@ -126,13 +130,15 @@ class national_container extends StatelessWidget {
           ),
           Text(
             ktext,
-            style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold),
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 22.sp, fontWeight: FontWeight.w500),
           ),
           Text(
             ktextnews,
             overflow: TextOverflow.ellipsis,
-            maxLines: 6,
-            style: TextStyle(fontSize: 15.sp),
+            maxLines: 3,
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 15.sp, fontWeight: FontWeight.w500),
           )
         ],
       ),
@@ -170,7 +176,7 @@ class tablewidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           GestureDetector(
-            onTap: () => Get.to(() => homePage()),
+            onTap: () => Get.offAll(() => homePage()),
             child: const tablecontent(title: 'HOME'),
           ),
           GestureDetector(
@@ -244,6 +250,7 @@ class headwidget extends StatelessWidget {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '$month $year',
@@ -253,7 +260,7 @@ class headwidget extends StatelessWidget {
                     Text(
                       '$day',
                       style: TextStyle(
-                          fontSize: 18.sp, fontWeight: FontWeight.bold),
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
                     ),
                   ],
                 )

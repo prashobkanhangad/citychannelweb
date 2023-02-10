@@ -3,10 +3,14 @@ import 'package:city_chennel_web/presentation/admin/adminhome/adminhome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/route_manager.dart';
 
 class Loginpage extends StatelessWidget {
-  const Loginpage({super.key});
+  Loginpage({super.key});
+
+  final usernamecontroller = TextEditingController();
+  final passwordcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +42,7 @@ class Loginpage extends StatelessWidget {
                     SizedBox(
                       height: 60.w,
                       child: TextFormField(
+                        controller: usernamecontroller,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                               vertical: 13.0.w,
@@ -62,6 +67,7 @@ class Loginpage extends StatelessWidget {
                     SizedBox(
                       height: 60.w,
                       child: TextFormField(
+                        controller: passwordcontroller,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(
                               vertical: 13.0.w,
@@ -90,7 +96,20 @@ class Loginpage extends StatelessWidget {
                       width: double.maxFinite,
                       child: ElevatedButton(
                           onPressed: () {
-                            Get.to(() => adminHome());
+                            if (usernamecontroller.text == 'admin' &&
+                                passwordcontroller.text == 'admin@9988') {
+                              Get.to(() => adminHome());
+                            }
+                            //  else {
+                            //   Fluttertoast.showToast(
+                            //       msg: "This is Center Short Toast",
+                            //       toastLength: Toast.LENGTH_SHORT,
+                            //       gravity: ToastGravity.CENTER,
+                            //       timeInSecForIosWeb: 1,
+                            //       backgroundColor: Colors.red,
+                            //       textColor: Colors.white,
+                            //       fontSize: 16.0);
+                            // }
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor:

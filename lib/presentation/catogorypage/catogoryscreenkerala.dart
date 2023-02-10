@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Categoryscreenkerala extends StatelessWidget {
   const Categoryscreenkerala({
@@ -85,11 +86,13 @@ class Categoryscreenkerala extends StatelessWidget {
                                                       data.keralanewstitle!,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      maxLines: 4,
-                                                      style: TextStyle(
-                                                          fontSize: 23.sp,
-                                                          fontWeight:
-                                                              FontWeight.bold),
+                                                      maxLines: 3,
+                                                      style: GoogleFonts
+                                                          .notoSerifMalayalam(
+                                                              fontSize: 23.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -103,8 +106,12 @@ class Categoryscreenkerala extends StatelessWidget {
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       maxLines: 6,
-                                                      style: TextStyle(
-                                                          fontSize: 18.sp),
+                                                      style: GoogleFonts
+                                                          .notoSerifMalayalam(
+                                                              fontSize: 18.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
                                                     ),
                                                   )
                                                 ],

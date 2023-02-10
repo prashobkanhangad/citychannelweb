@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Categoryscreenkasargod extends StatelessWidget {
   const Categoryscreenkasargod({
@@ -70,8 +71,10 @@ class Categoryscreenkasargod extends StatelessWidget {
                                         return GestureDetector(
                                           onTap: () => Get.to(NewsinsideScreen(
                                               imageurl: data.kasaragodimageurl,
-                                              newsdescription: data.kasaragodnewsdescription,
-                                              newstitle: data.kasaragodnewstitle)),
+                                              newsdescription:
+                                                  data.kasaragodnewsdescription,
+                                              newstitle:
+                                                  data.kasaragodnewstitle)),
                                           child: Row(
                                             children: [
                                               SizedBox(
@@ -91,14 +94,15 @@ class Categoryscreenkasargod extends StatelessWidget {
                                                       width: 490.w,
                                                       child: Text(
                                                         data.kasaragodnewstitle!,
-                                                        maxLines: 4,
+                                                        maxLines: 3,
                                                         overflow: TextOverflow
                                                             .ellipsis,
-                                                        style: TextStyle(
-                                                            fontSize: 23.sp,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                        style: GoogleFonts
+                                                            .notoSerifMalayalam(
+                                                                fontSize: 23.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
                                                       ),
                                                     ),
                                                     SizedBox(
@@ -112,8 +116,8 @@ class Categoryscreenkasargod extends StatelessWidget {
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         maxLines: 6,
-                                                        style: TextStyle(
-                                                            fontSize: 18.sp),
+                                                                                          style:GoogleFonts.notoSerifMalayalam(fontSize: 18.sp, fontWeight: FontWeight.w500),
+
                                                       ),
                                                     )
                                                   ],

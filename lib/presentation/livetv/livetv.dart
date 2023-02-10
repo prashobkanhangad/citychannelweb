@@ -31,7 +31,7 @@ class Livescreen extends StatelessWidget {
                             color: Colors.indigo[600],
                             height: 477.w,
                             width: 848.w,
-                            child: Youtubelive(videourl: 'https://www.youtube.com/watch?v=sfdc34oWVxI')
+                            child: Youtubelive(videourl: 'https://www.youtube.com/watch?v=Nq2wYlWFucg')
                           ),
                         ),
                         Padding(
