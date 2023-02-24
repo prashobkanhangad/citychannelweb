@@ -2,7 +2,6 @@ import 'package:city_chennel_web/core/constants.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/adminhome.dart';
 import 'package:city_chennel_web/presentation/livetv/livetv.dart';
 import 'package:city_chennel_web/presentation/homepage/homepage.dart';
-import 'package:city_chennel_web/presentation/video/videoscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,13 +37,14 @@ class MyApp extends StatelessWidget {
               '/livetv': (context) => Livescreen(),
             },
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
+            title: 'City Channel',
             theme: ThemeData(
               scaffoldBackgroundColor: kwhitecolor,
               fontFamily: GoogleFonts.montserrat().fontFamily,
               primarySwatch: Colors.blue,
             ),
-            home: homePage(),
+            home:
+             homePage(),
           );
         });
   }

@@ -57,7 +57,7 @@ class Loginpage extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.circular(5),
                             ),
-                            hintText: 'EMAIL',
+                            hintText: 'USER NAME',
                             hintStyle: TextStyle(
                                 fontSize: 18.sp,
                                 color: const Color.fromARGB(255, 12, 3, 108))),
@@ -66,7 +66,7 @@ class Loginpage extends StatelessWidget {
                     SizedBox(height: 20.w),
                     SizedBox(
                       height: 60.w,
-                      child: TextFormField(
+                      child: TextFormField(obscureText: true,
                         controller: passwordcontroller,
                         decoration: InputDecoration(
                             contentPadding: EdgeInsets.symmetric(

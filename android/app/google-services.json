@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:752778089461:android:29662ed7d02c833b9c46bc",
         "android_client_info": {
-          "package_name": "com.example.city_channel_app"
+          "package_name": "com.cityksd.city_channel_app"
         }
       },
       "oauth_client": [
@@ -35,7 +35,7 @@
               "client_id": "752778089461-1fm40ferogmhd92tv9adhd3j0cqn4qqm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.cityChannelApp"
+                "bundle_id": "com.cityksd.cityChannelApp"
               }
             }
           ]
@@ -46,7 +46,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:752778089461:android:dc39350c1753cb889c46bc",
         "android_client_info": {
-          "package_name": "com.example.city_chennel_web"
+          "package_name": "com.cityksd.city_chennel_web"
         }
       },
       "oauth_client": [
@@ -71,7 +71,7 @@
               "client_id": "752778089461-1fm40ferogmhd92tv9adhd3j0cqn4qqm.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.cityChannelApp"
+                "bundle_id": "com.cityksd.cityChannelApp"
               }
             }
           ]

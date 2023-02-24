@@ -17,7 +17,7 @@ class Adminkasaragodwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding:  EdgeInsets.all(10.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -124,10 +124,40 @@ class Adminkasaragodwidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kblackcolor, foregroundColor: kwhitecolor),
                 onPressed: () {
-                  getcontroller.kasaragodnewsurl(
-                      kasaragodimageurl: getcontroller.newscardimagefileurl!,
-                      kasaragodnewstitle: kasaragodnewstitle.text,
-                      kasaragodnewsdescription: kasaragodnewsdescription.text);
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('Are you sure you want to submit'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            kasaragodnewstitle.clear();
+                            kasaragodnewsdescription.clear();
+                            getcontroller.homenewscardimg = null;
+
+                            Navigator.pop(context, 'Cancel');
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            getcontroller.kasaragodnewsurl(
+                                kasaragodimageurl:
+                                    getcontroller.newscardimagefileurl!,
+                                kasaragodnewstitle: kasaragodnewstitle.text,
+                                kasaragodnewsdescription:
+                                    kasaragodnewsdescription.text);
+                            Navigator.pop(context, 'submit');
+                            kasaragodnewstitle.clear();
+                            kasaragodnewsdescription.clear();
+                            getcontroller.homenewscardimg = null;
+                          },
+                          child: const Text('submit'),
+                        ),
+                      ],
+                    ),
+                  );
+
                   print('KASARAGOD NEWS UPLOADED');
                 },
                 child: Text(

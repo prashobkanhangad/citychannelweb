@@ -1,22 +1,18 @@
-import 'dart:developer';
+import 'package:city_chennel_web/model/nationalnewsmodel.dart';
+import 'package:city_chennel_web/presentation/newsinsidescreen/newsinsidescreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:city_chennel_web/controller/adminhomecontroller.dart';
-import 'package:city_chennel_web/controller/homecontroller.dart';
 import 'package:city_chennel_web/core/constants.dart';
 import 'package:city_chennel_web/model/kasaragodnewsmodel.dart';
 import 'package:city_chennel_web/model/keralanewsmodel.dart';
 import 'package:city_chennel_web/model/newscardmodel.dart';
 import 'package:city_chennel_web/model/newstimemodel.dart';
 import 'package:city_chennel_web/presentation/homepage/youtubetest.dart';
-import 'package:city_chennel_web/presentation/newsinsidescreen/newsinsidescreen.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
-import 'package:city_chennel_web/presentation/login/loginpage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -29,31 +25,13 @@ class homePage extends StatelessWidget {
     super.key,
   });
 
-  // List<Newstimemodel> basketitems = [];
-
   final livestreamurlcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // fetchnewstimeurl() async {
-    //   var records =
-    //       await FirebaseFirestore.instance.collection('citynewstime').get();
-    // }
-
-    // mapRecords(QuerySnapshot<Map<String, dynamic>> records) {
-    //   var _list = records.docs
-    //       .map(
-    //         (newstimemodel) => Newstimemodel(
-    //             newstimeurl: newstimemodel['newstimeurl'],
-    //             uid: newstimemodel.id),
-    //       )
-    //       .toList();
-    //   basketitems = _list;
-    // }
-
     YoutubePlayerController _controller = YoutubePlayerController(
       initialVideoId: 'iLnmTe5Q2Qw',
-      flags: YoutubePlayerFlags(
+      flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: true,
       ),
@@ -124,63 +102,60 @@ class homePage extends StatelessWidget {
                                   .snapshots(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasError) {
-                                  return CircularProgressIndicator();
+                                  return const CircularProgressIndicator();
                                 }
                                 if (!snapshot.hasData) {
-                                  return Center(
-                                    child: Text(
-                                      'Data not available',
-                                    ),
+                                  return Container(
+                                    width: 720.w,
+                                    height: 405.w,
+                                    child: const Center(
+                                        child: CircularProgressIndicator()),
                                   );
                                 }
+                                final length = snapshot.data!.docs.length;
                                 final data = Newstimemodel.fromJson(
-                                    snapshot.data!.docs[0].data());
+                                    snapshot.data!.docs[length - 1].data());
                                 return Container(
                                     color: Colors.indigo[600],
                                     height: 405.w,
                                     width: 720.w,
-                                    child: YoutubeAppDemo(
-                                      videourl: data.newstimeurl,
-                                    ));
+                                    child: yiutubeplayer(
+                                        videoid: data.newstimeurl));
                               }),
-                        ]
-                            // );
-                            // }
-                            ),
+                        ]),
                         SizedBox(
                           width: 20.w,
                         ),
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
-                                .collection('shortnews')
+                                .collection("shortnews")
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
                               if (!snapshot.hasData) {
-                                return Center(
-                                  child: Text(
-                                    'Data not available',
-                                  ),
+                                return Container(
+                                  width: 410.w,
+                                  height: 440.w,
+                                  child: const Center(
+                                      child: CircularProgressIndicator()),
                                 );
                               }
-
                               final length = snapshot.data!.docs.length;
                               final data = Shortnewsmodel.fromMap(
-                                  snapshot.data!.docs[0].data());
+                                  snapshot.data!.docs[length - 1].data());
                               // final docUser = FirebaseFirestore.instance
                               //     .collection('peoples')
                               //     .doc(data.uid);
                               print(data.shortnewsimgurl);
 
-                              //             final citynewsdata = Newstimemodel.fromJson(
-                              // snapshot.data!.docs[0].data());
                               return Container(
                                 width: 410.w,
                                 height: 440.w,
-                                color: Color.fromARGB(255, 239, 199, 199),
+                                color: const Color.fromARGB(255, 239, 199, 199),
                                 child: Image(
+                                    fit: BoxFit.cover,
                                     image: NetworkImage(data.shortnewsimgurl)),
                               );
                             })
@@ -194,26 +169,30 @@ class homePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        GestureDetector(
-                          onTap: () => Get.toNamed('/livetv'),
-                          child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('kasaragodnews')
-                                  .snapshots(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasError) {
-                                  return CircularProgressIndicator();
-                                }
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: Text(
-                                      'Data not available',
-                                    ),
-                                  );
-                                }
-                                final data = kasaragodnewsmodel
-                                    .fromMap(snapshot.data!.docs[0].data());
-                                return Container(
+                        StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('kasaragodnews')
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasError) {
+                                return const CircularProgressIndicator();
+                              }
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: Text(
+                                    'Data not available',
+                                  ),
+                                );
+                              }
+                              final data = kasaragodnewsmodel
+                                  .fromMap(snapshot.data!.docs[0].data());
+                              return GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data.kasaragodimageurl,
+                                    newsdescription:
+                                        data.kasaragodnewsdescription,
+                                    newstitle: data.kasaragodnewstitle)),
+                                child: Container(
                                   height: 460.w,
                                   width: 371.w,
                                   color: kwhitecolor,
@@ -263,19 +242,19 @@ class homePage extends StatelessWidget {
                                           )
                                     ],
                                   ),
-                                );
-                              }),
-                        ),
+                                ),
+                              );
+                            }),
                         StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection('keralanews')
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
                               if (!snapshot.hasData) {
-                                return Center(
+                                return const Center(
                                   child: Text(
                                     'Data not available',
                                   ),
@@ -283,48 +262,54 @@ class homePage extends StatelessWidget {
                               }
                               final data = keralanewsmodel
                                   .fromMap(snapshot.data!.docs[0].data());
-                              return Container(
-                                height: 460.w,
-                                width: 371.w,
-                                color: kwhitecolor,
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      height: 30.w,
-                                    ),
-                                    SizedBox(
-                                      height: 200.w,
-                                      child: Image(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(
-                                              data.keralaimageurl!)),
-                                    ),
-                                    SizedBox(
-                                      height: 8.w,
-                                    ),
-                                    Text(data.keralanewstitle!,
-                                        overflow: TextOverflow.ellipsis,
-                                        maxLines: 3,
-                                        style: GoogleFonts.notoSerifMalayalam(
-                                            fontSize: 23.sp,
-                                            fontWeight: FontWeight.w500)
+                              return GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data.keralaimageurl,
+                                    newsdescription: data.keralanewsdescription,
+                                    newstitle: data.keralanewstitle)),
+                                child: Container(
+                                  height: 460.w,
+                                  width: 371.w,
+                                  color: kwhitecolor,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 30.w,
+                                      ),
+                                      SizedBox(
+                                        height: 200.w,
+                                        child: Image(
+                                            fit: BoxFit.cover,
+                                            image: NetworkImage(
+                                                data.keralaimageurl!)),
+                                      ),
+                                      SizedBox(
+                                        height: 8.w,
+                                      ),
+                                      Text(data.keralanewstitle!,
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 3,
+                                          style: GoogleFonts.notoSerifMalayalam(
+                                              fontSize: 23.sp,
+                                              fontWeight: FontWeight.w500)
 
-                                        //  TextStyle(
-                                        //     fontSize: 22.sp,
-                                        //     fontWeight: FontWeight.bold),
-                                        ),
-                                    SizedBox(
-                                      height: 5.w,
-                                    ),
-                                    Text(
-                                      data.keralanewsdescription!,
-                                      overflow: TextOverflow.ellipsis,
-                                      maxLines: 6,
-                                      style: GoogleFonts.notoSerifMalayalam(
-                                          fontSize: 16.sp,
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  ],
+                                          //  TextStyle(
+                                          //     fontSize: 22.sp,
+                                          //     fontWeight: FontWeight.bold),
+                                          ),
+                                      SizedBox(
+                                        height: 5.w,
+                                      ),
+                                      Text(
+                                        data.keralanewsdescription!,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 6,
+                                        style: GoogleFonts.notoSerifMalayalam(
+                                            fontSize: 16.sp,
+                                            fontWeight: FontWeight.w500),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               );
                             }),
@@ -334,10 +319,10 @@ class homePage extends StatelessWidget {
                                 .snapshots(),
                             builder: (context, snapshot) {
                               if (snapshot.hasError) {
-                                return CircularProgressIndicator();
+                                return const CircularProgressIndicator();
                               }
                               if (!snapshot.hasData) {
-                                return Center(
+                                return const Center(
                                   child: Text(
                                     'Data not available',
                                   ),
@@ -365,21 +350,57 @@ class homePage extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
-                                    kasargodcontainer(
-                                        kasargodimage: data0.kasaragodimageurl,
-                                        kasargodtext: data0.kasaragodnewstitle),
+                                    GestureDetector(
+                                      onTap: () => Get.to(
+                                        NewsinsideScreen(
+                                            imageurl: data0.kasaragodimageurl,
+                                            newsdescription:
+                                                data0.kasaragodnewsdescription,
+                                            newstitle:
+                                                data0.kasaragodnewstitle),
+                                      ),
+                                      child: kasargodcontainer(
+                                          kasargodimage:
+                                              data0.kasaragodimageurl,
+                                          kasargodtext:
+                                              data0.kasaragodnewstitle),
+                                    ),
                                     SizedBox(
                                       height: 10.w,
                                     ),
-                                    kasargodcontainer(
-                                        kasargodimage: data1.kasaragodimageurl,
-                                        kasargodtext: data1.kasaragodnewstitle),
+                                    GestureDetector(
+                                      onTap: () => Get.to(
+                                        NewsinsideScreen(
+                                            imageurl: data1.kasaragodimageurl,
+                                            newsdescription:
+                                                data1.kasaragodnewsdescription,
+                                            newstitle:
+                                                data1.kasaragodnewstitle),
+                                      ),
+                                      child: kasargodcontainer(
+                                          kasargodimage:
+                                              data1.kasaragodimageurl,
+                                          kasargodtext:
+                                              data1.kasaragodnewstitle),
+                                    ),
                                     SizedBox(
                                       height: 10.w,
                                     ),
-                                    kasargodcontainer(
-                                        kasargodimage: data2.kasaragodimageurl,
-                                        kasargodtext: data2.kasaragodnewstitle),
+                                    GestureDetector(
+                                      onTap: () => Get.to(
+                                        NewsinsideScreen(
+                                            imageurl: data2.kasaragodimageurl,
+                                            newsdescription:
+                                                data2.kasaragodnewsdescription,
+                                            newstitle:
+                                                data2.kasaragodnewstitle),
+                                      ),
+                                      child: kasargodcontainer(
+                                          kasargodimage:
+                                              data2.kasaragodimageurl,
+                                          kasargodtext:
+                                              data2.kasaragodnewstitle),
+                                    ),
                                     SizedBox(
                                       height: 8.w,
                                     ),
@@ -399,7 +420,7 @@ class homePage extends StatelessWidget {
                     decoration:
                         BoxDecoration(border: Border.all(color: kblackcolor)),
                     // color: Colors.black,
-                    child: Center(child: Text('Your ADVT Comes Here')),
+                    child: const Center(child: Text('Your ADVT Comes Here')),
                   ),
                   SizedBox(
                     height: 10.w,
@@ -418,10 +439,10 @@ class homePage extends StatelessWidget {
                           .snapshots(),
                       builder: (context, snapshot) {
                         if (snapshot.hasError) {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator();
                         }
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: Text(
                               'Data not available',
                             ),
@@ -442,21 +463,42 @@ class homePage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              keralacontainer(
-                                  keralaimage: data0.keralaimageurl!,
-                                  keralatext: data0.keralanewstitle!,
-                                  keraladiscription:
-                                      data0.keralanewsdescription!),
-                              keralacontainer(
-                                  keralaimage: data1.keralaimageurl!,
-                                  keralatext: data1.keralanewstitle!,
-                                  keraladiscription:
-                                      data1.keralanewsdescription!),
-                              keralacontainer(
-                                  keralaimage: data2.keralaimageurl!,
-                                  keralatext: data2.keralanewstitle!,
-                                  keraladiscription:
-                                      data2.keralanewsdescription!),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data0.keralaimageurl,
+                                    newsdescription:
+                                        data0.keralanewsdescription,
+                                    newstitle: data0.keralanewstitle)),
+                                child: keralacontainer(
+                                    keralaimage: data0.keralaimageurl!,
+                                    keralatext: data0.keralanewstitle!,
+                                    keraladiscription:
+                                        data0.keralanewsdescription!),
+                              ),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data1.keralaimageurl,
+                                    newsdescription:
+                                        data1.keralanewsdescription,
+                                    newstitle: data1.keralanewstitle)),
+                                child: keralacontainer(
+                                    keralaimage: data1.keralaimageurl!,
+                                    keralatext: data1.keralanewstitle!,
+                                    keraladiscription:
+                                        data1.keralanewsdescription!),
+                              ),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data2.keralaimageurl,
+                                    newsdescription:
+                                        data2.keralanewsdescription,
+                                    newstitle: data2.keralanewstitle)),
+                                child: keralacontainer(
+                                    keralaimage: data2.keralaimageurl!,
+                                    keralatext: data2.keralanewstitle!,
+                                    keraladiscription:
+                                        data2.keralanewsdescription!),
+                              ),
                             ],
                           ),
                         );
@@ -483,12 +525,12 @@ class homePage extends StatelessWidget {
                     width: 1150.w,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        programesvideocontainer(),
-                        programesvideocontainer(),
-                        programesvideocontainer(),
-                        programesvideocontainer(),
-                        programesvideocontainer(),
+                      children: [
+                        programesvideocontainer(index: 0),
+                        programesvideocontainer(index: 1),
+                        programesvideocontainer(index: 2),
+                        programesvideocontainer(index: 3),
+                        programesvideocontainer(index: 4),
                       ],
                     ),
                   ),
@@ -503,21 +545,90 @@ class homePage extends StatelessWidget {
                           fontSize: 22.w, fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.only(top: 5.w),
-                    width: 1150.w,
-                    height: 360.w,
-                    color: kwhitecolor,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        national_container(),
-                        national_container(),
-                        national_container(),
-                        national_container(),
-                      ],
-                    ),
-                  ),
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('nationalnews')
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const CircularProgressIndicator();
+                        }
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: Text(
+                              'Data not available',
+                            ),
+                          );
+                        }
+                        final data0 = nationalnewsmodel
+                            .fromMap(snapshot.data!.docs[0].data());
+                        final data1 = nationalnewsmodel
+                            .fromMap(snapshot.data!.docs[1].data());
+                        final data2 = nationalnewsmodel
+                            .fromMap(snapshot.data!.docs[2].data());
+                        final data3 = nationalnewsmodel
+                            .fromMap(snapshot.data!.docs[3].data());
+                        return Container(
+                          padding: const EdgeInsets.only(top: 5),
+                          width: 1150.w,
+                          height: 320.w,
+                          color: kwhitecolor,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data0.nationalimageurl,
+                                    newsdescription:
+                                        data0.nationalnewsdescription,
+                                    newstitle: data0.nationalnewstitle)),
+                                child: nationalcontainer(
+                                    nationalimage: data0.nationalimageurl!,
+                                    nationaltext: data0.nationalnewstitle!,
+                                    nationaldiscription:
+                                        data0.nationalnewsdescription!),
+                              ),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data1.nationalimageurl,
+                                    newsdescription:
+                                        data1.nationalnewsdescription,
+                                    newstitle: data1.nationalnewstitle)),
+                                child: nationalcontainer(
+                                    nationalimage: data1.nationalimageurl!,
+                                    nationaltext: data1.nationalnewstitle!,
+                                    nationaldiscription:
+                                        data1.nationalnewsdescription!),
+                              ),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data2.nationalimageurl,
+                                    newsdescription:
+                                        data2.nationalnewsdescription,
+                                    newstitle: data2.nationalnewstitle)),
+                                child: nationalcontainer(
+                                    nationalimage: data2.nationalimageurl!,
+                                    nationaltext: data2.nationalnewstitle!,
+                                    nationaldiscription:
+                                        data2.nationalnewsdescription!),
+                              ),
+                              GestureDetector(
+                                onTap: () => Get.to(NewsinsideScreen(
+                                    imageurl: data2.nationalimageurl,
+                                    newsdescription:
+                                        data2.nationalnewsdescription,
+                                    newstitle: data2.nationalnewstitle)),
+                                child: nationalcontainer(
+                                    nationalimage: data3.nationalimageurl!,
+                                    nationaltext: data3.nationalnewstitle!,
+                                    nationaldiscription:
+                                        data2.nationalnewsdescription!),
+                              ),
+                            ],
+                          ),
+                        );
+                      }),
                   const bottumwidget()
                 ],
               ),

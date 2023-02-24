@@ -1,9 +1,7 @@
-
 import 'package:city_chennel_web/core/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class adminlivetvwidget extends StatelessWidget {
   const adminlivetvwidget({
@@ -13,7 +11,7 @@ class adminlivetvwidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding:  EdgeInsets.all(10.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -52,7 +50,31 @@ class adminlivetvwidget extends StatelessWidget {
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kblackcolor, foregroundColor: kwhitecolor),
-                onPressed: () {},
+                onPressed: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('Are you sure you want to submit?'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            // keralanewstitle.clear();
+
+                            Navigator.pop(context, 'Cancel');
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'submit');
+                            // keralanewstitle.clear();
+                          },
+                          child: const Text('submit'),
+                        ),
+                      ],
+                    ),
+                  );
+                },
                 child: Text(
                   'Submit',
                   style: TextStyle(fontSize: 18.sp),

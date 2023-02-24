@@ -71,9 +71,31 @@ class adminhomewidget extends StatelessWidget {
                         backgroundColor: kblackcolor,
                         foregroundColor: kwhitecolor),
                     onPressed: () {
-                      adminhomexontroller().createnewstimeurl(
-                          newstimeurl: livestreamurlcontroller.text);
-                      livestreamurlcontroller.clear();
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          content:
+                              const Text('Are you sure you want to submit'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context, 'Cancel');
+                                livestreamurlcontroller.clear();
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                adminhomexontroller().createnewstimeurl(
+                                    newstimeurl: livestreamurlcontroller.text);
+                                Navigator.pop(context, 'submit');
+                                livestreamurlcontroller.clear();
+                              },
+                              child: const Text('submit'),
+                            ),
+                          ],
+                        ),
+                      );
                     },
                     child: Text(
                       'Submit',
@@ -93,20 +115,19 @@ class adminhomewidget extends StatelessWidget {
               SizedBox(height: 10.w),
               Row(
                 children: [
-                  GetBuilder<adminhomexontroller>(
-                    builder: (context) {
-                      return Container(
-                        height: 250.w,
-                        width: 200.w,
-                        decoration:
-                            BoxDecoration(border: Border.all(color: kblackcolor)),
-                        child: getcontroller.homenewscardimg==null
-                            ? SizedBox()
-                            : Image(
-                                image: MemoryImage(getcontroller.homenewscardimg!)),
-                      );
-                    }
-                  ),
+                  GetBuilder<adminhomexontroller>(builder: (context) {
+                    return Container(
+                      height: 250.w,
+                      width: 200.w,
+                      decoration:
+                          BoxDecoration(border: Border.all(color: kblackcolor)),
+                      child: getcontroller.homenewscardimg == null
+                          ? SizedBox()
+                          : Image(
+                              image:
+                                  MemoryImage(getcontroller.homenewscardimg!)),
+                    );
+                  }),
                   SizedBox(
                     width: 10.w,
                   ),
@@ -162,11 +183,40 @@ class adminhomewidget extends StatelessWidget {
                         backgroundColor: kblackcolor,
                         foregroundColor: kwhitecolor),
                     onPressed: () {
-                      getcontroller.createshortnews(
-                          shortnewsimgurl: getcontroller.newscardimagefileurl.toString(),
-                          shortnewstitle: newscardtitlecontroller.text);
-                          print('homenewscard img submitted');
-                          log(getcontroller.newscardimagefileurl.toString());
+                      showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          content:
+                              const Text('Are you sure you want to submit'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                newscardtitlecontroller.clear();
+                                getcontroller.homenewscardimg = null;
+
+                                Navigator.pop(context, 'Cancel');
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                getcontroller.createshortnews(
+                                    shortnewsimgurl:
+                                        getcontroller.newscardimagefileurl!,
+                                    shortnewstitle:
+                                        newscardtitlecontroller.text);
+                                Navigator.pop(context, 'submit');
+                                newscardtitlecontroller.clear();
+                                getcontroller.homenewscardimg = null;
+                              },
+                              child: const Text('submit'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      // print('homenewscard img submitted');
+                      // log(getcontroller.newscardimagefileurl.toString());
                       // print(getcontroller.homenewscardimg);
                     },
                     child: Text(

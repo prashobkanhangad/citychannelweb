@@ -1,12 +1,18 @@
 import 'package:city_chennel_web/core/constants.dart';
+import 'package:city_chennel_web/model/nationalnewsmodel.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';
+import 'package:city_chennel_web/presentation/newsinsidescreen/newsinsidescreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Categoryscreennational extends StatelessWidget {
-  const Categoryscreennational({super.key,});
+  const Categoryscreennational({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -34,70 +40,108 @@ class Categoryscreennational extends StatelessWidget {
                               height: 10.w,
                             ),
                             Text(
-                              'National',
+                              'national',
                               style: TextStyle(
                                   fontSize: 22.w, fontWeight: FontWeight.bold),
                             ),
                             SizedBox(
                               height: 10.w,
                             ),
-                            ListView.separated(
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return Row(
-                                    children: [
-                                      SizedBox(
-                                          height: 250.w,
-                                          width: 350.w,
-                                          child: Image(
-                                              fit: BoxFit.cover,
-                                              image: AssetImage(
-                                                  'assets/nepal-edited.jpg'))),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10.w),
-                                        height: 250.w,
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              width: 490.w,
-                                              child: Text(
-                                                ktext,
-                                                                                  style:GoogleFonts.notoSerifMalayalam(fontSize: 25.sp, fontWeight: FontWeight.w500),
-
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: 5.w,
-                                            ),
-                                            SizedBox(
-                                              width: 490.w,
-                                              // height: 180.w,
-                                              child: Text(
-                                                ktextnews,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 7,
-                                                                             style:GoogleFonts.notoSerifMalayalam(fontSize: 18.sp, fontWeight: FontWeight.w500),
-
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                            StreamBuilder(
+                                stream: FirebaseFirestore.instance
+                                    .collection('nationalnews')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return CircularProgressIndicator();
+                                  }
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: Text(
+                                        'Data not available',
                                       ),
-                                    ],
-                                  );
-                                },
-                                separatorBuilder: (context, index) {
-                                  return Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 12.0.w),
-                                    child: Container(
-                                      height: 1.w,
-                                      color: kgreycolor,
-                                    ),
-                                  );
-                                },
-                                itemCount: 1),
+                                    );
+                                  }
+                                  return ListView.separated(
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        final data = nationalnewsmodel.fromMap(
+                                            snapshot.data!.docs[index].data());
+                                        return GestureDetector(
+                                          onTap: () => Get.to(NewsinsideScreen(
+                                              imageurl: data.nationalimageurl,
+                                              newsdescription: data.nationalnewsdescription,
+                                              newstitle: data.nationalnewstitle)),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                  height: 250.w,
+                                                  width: 350.w,
+                                                  child: Image(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(data
+                                                          .nationalimageurl!))),
+                                              Container(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: 10.w),
+                                                height: 250.w,
+                                                child: Column(
+                                                  children: [
+                                                    SizedBox(
+                                                      width: 490.w,
+                                                      child: Text(
+                                                        data.nationalnewstitle!,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 3,
+                                                        style: GoogleFonts
+                                                            .notoSerifMalayalam(
+                                                                fontSize: 23.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.w,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 490.w,
+                                                      // height: 180.w,
+                                                      child: Text(
+                                                        data.nationalnewsdescription!,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        maxLines: 6,
+                                                        style: GoogleFonts
+                                                            .notoSerifMalayalam(
+                                                                fontSize: 18.sp,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 12.0.w),
+                                          child: Container(
+                                            height: 1.w,
+                                            color: kgreycolor,
+                                          ),
+                                        );
+                                      },
+                                      itemCount: snapshot.data!.size < 20
+                                          ? snapshot.data!.size
+                                          : 20);
+                                }),
                             SizedBox(
                               height: 10.w,
                             ),
@@ -111,6 +155,10 @@ class Categoryscreennational extends StatelessWidget {
                           height: 500.w,
                           color: kgreycolor,
                           child: Center(
+                            child: Text(
+                              'Your ADVT Here',
+                              style: TextStyle(fontSize: 14.sp),
+                            ),
                           ),
                         ),
                       )

@@ -9,15 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 ///
-class YoutubeAppDemo extends StatefulWidget {
-  final String videourl;
+class yiutubeplayer extends StatefulWidget {
+  final String videoid;
 
-  const YoutubeAppDemo({super.key, required this.videourl});
+  const yiutubeplayer({super.key, required this.videoid});
   @override
-  _YoutubeAppDemoState createState() => _YoutubeAppDemoState();
+  _yiutubeplayerState createState() => _yiutubeplayerState();
 }
 
-class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
+class _yiutubeplayerState extends State<yiutubeplayer> {
   late YoutubePlayerController _controller;
 
   @override
@@ -34,13 +34,21 @@ class _YoutubeAppDemoState extends State<YoutubeAppDemo> {
       ),
     );
 
+    // final _controller = YoutubePlayerController.fromVideoId(
+    //   videoId: '9IQ8X3r0Ow0',
+    //   autoPlay: false,
+    // );
+
+    // _controller = YoutubePlayerController(
+    //   params: const YoutubePlayerParams(),
+    // );
+
     _controller.setFullScreenListener(
       (isFullScreen) {
         log('${isFullScreen ? 'Entered' : 'Exited'} Fullscreen.');
       },
     );
-    _controller.loadVideo(widget.videourl);
-    // _controller.pauseVideo();
+    _controller.cueVideoById(videoId: widget.videoid);
   }
 
   @override

@@ -17,7 +17,7 @@ class adminkeralaswidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding:  EdgeInsets.all(10.0.w),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,14 +60,14 @@ class adminkeralaswidget extends StatelessWidget {
           Row(
             children: [
               Container(
-                  height: 250.w,
-                  width: 200.w,
-                  decoration:
-                      BoxDecoration(border: Border.all(color: kblackcolor)),
-                  child: getcontroller.homenewscardimg == null
-                      ? SizedBox()
-                      : Image(
-                          image: MemoryImage(getcontroller.homenewscardimg!))),
+                height: 250.w,
+                width: 200.w,
+                decoration:
+                    BoxDecoration(border: Border.all(color: kblackcolor)),
+                child: getcontroller.homenewscardimg == null
+                    ? SizedBox()
+                    : Image(image: MemoryImage(getcontroller.homenewscardimg!)),
+              ),
               SizedBox(
                 width: 10.w,
               ),
@@ -121,11 +121,41 @@ class adminkeralaswidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                     backgroundColor: kblackcolor, foregroundColor: kwhitecolor),
                 onPressed: () {
-                  getcontroller.keralanewsurl(
-                      keralaimageurl: getcontroller.newscardimagefileurl!,
-                      keralanewstitle: keralanewstitle.text,
-                      keralanewsdescription: keralanewsdescription.text);
-                  print('kerala NEWS UPLOADED');
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      content: const Text('Are you sure you want to submit'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            keralanewstitle.clear();
+                            keralanewsdescription.clear();
+                            getcontroller.homenewscardimg = null;
+
+                            Navigator.pop(context, 'Cancel');
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            getcontroller.keralanewsurl(
+                                keralaimageurl:
+                                    getcontroller.newscardimagefileurl!,
+                                keralanewstitle: keralanewstitle.text,
+                                keralanewsdescription:
+                                    keralanewsdescription.text);
+                            Navigator.pop(context, 'submit');
+                            keralanewstitle.clear();
+                            keralanewsdescription.clear();
+                            getcontroller.homenewscardimg = null;
+                          },
+                          child: const Text('submit'),
+                        ),
+                      ],
+                    ),
+                  );
+
+                  // print('kerala NEWS UPLOADED');
                 },
                 child: Text(
                   'Submit',

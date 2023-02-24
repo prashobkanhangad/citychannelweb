@@ -5,7 +5,11 @@ import 'dart:typed_data';
 import 'package:city_chennel_web/model/kasaragodnewsmodel.dart';
 import 'package:city_chennel_web/model/keralanewsmodel.dart';
 import 'package:city_chennel_web/model/livestreammodel.dart';
+import 'package:city_chennel_web/model/nationalnewsmodel.dart';
+import 'package:city_chennel_web/model/programmemodel.dart';
 import 'package:city_chennel_web/model/videosectionmodel.dart';
+import 'package:city_chennel_web/presentation/homepage/homepage.dart';
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'package:city_chennel_web/model/newscardmodel.dart';
@@ -14,8 +18,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
 
 class adminhomexontroller extends GetxController {
   int selectedoption = 0;
@@ -161,5 +163,62 @@ class adminhomexontroller extends GetxController {
     final json = shortnews.toMap();
 
     await docUrl.set(json);
+  }
+
+  Future nationalnewsurl(
+      {required String nationalimageurl,
+      required String nationalnewstitle,
+      required String nationalnewsdescription}) async {
+    final docUrl = FirebaseFirestore.instance.collection('nationalnews').doc();
+
+    final shortnews = nationalnewsmodel(
+        nationalimageurl: nationalimageurl,
+        nationalnewsdescription: nationalnewsdescription,
+        nationalnewstitle: nationalnewstitle,
+        uid: docUrl.id);
+
+    final json = shortnews.toMap();
+
+    await docUrl.set(json);
+  }
+
+  Future programmeurl(
+      {required String programmeimageurl,
+      required String programmetitle,
+      required String programmedescription}) async {
+    final docUrl = FirebaseFirestore.instance.collection('programme').doc();
+
+    final shortnews = programmemodel(
+        programmeimageurl: programmeimageurl,
+        programmeyoutubeurl: programmedescription,
+        programmetitle: programmetitle,
+        uid: docUrl.id);
+
+    final json = shortnews.toMap();
+
+    await docUrl.set(json);
+  }
+
+  showconfirmationbox(context, submitfunction, clearfunction) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        content: const Text('Are you sure you want to submit'),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              submitfunction();
+              Navigator.pop(context, 'submit');
+              clearfunction();
+            },
+            child: const Text('submit'),
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.city_chennel_web">
+    package="com.cityksd.city_chennel_web">
    <application
         android:label="city_chennel_web"
         android:name="${applicationName}"

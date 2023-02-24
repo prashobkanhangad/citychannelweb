@@ -4,6 +4,8 @@ import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminhomewi
 import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminkasaragodwidget.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminkeralawidget.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminlivetvwidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminnationalwidget.dart';
+import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminprogrammewidget.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/widget/adminvideoswidget.dart';
 import 'package:city_chennel_web/presentation/admin/adminhome/widgets.dart';
 import 'package:city_chennel_web/presentation/homepage/widget.dart';

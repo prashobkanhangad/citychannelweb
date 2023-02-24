@@ -1,18 +1,22 @@
 import 'package:city_chennel_web/core/constants.dart';
+import 'package:city_chennel_web/model/programmemodel.dart';
 import 'package:city_chennel_web/presentation/catogorypage/catogoryscreenkasaragod.dart';
 import 'package:city_chennel_web/presentation/catogorypage/catogoryscreenkerala.dart';
 import 'package:city_chennel_web/presentation/catogorypage/catogoryscreennational.dart';
+import 'package:city_chennel_web/presentation/catogorypage/catogoryscreenprogramme.dart';
 import 'package:city_chennel_web/presentation/homepage/homepage.dart';
 import 'package:city_chennel_web/presentation/homepage/youtubetest.dart';
 import 'package:city_chennel_web/presentation/livetv/livetv.dart';
 import 'package:city_chennel_web/presentation/login/loginpage.dart';
 import 'package:city_chennel_web/presentation/video/videoscreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class kasargodcontainer extends StatelessWidget {
   final kasargodimage;
@@ -37,6 +41,38 @@ class kasargodcontainer extends StatelessWidget {
             kasargodtext,
             overflow: TextOverflow.ellipsis,
             maxLines: 4,
+            style: GoogleFonts.notoSerifMalayalam(
+                fontSize: 20.sp, fontWeight: FontWeight.w500),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class insiderecentnews extends StatelessWidget {
+  final insideimage;
+  final insidetext;
+  const insiderecentnews(
+      {Key? key, required this.insideimage, required this.insidetext})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Image(
+            fit: BoxFit.cover,
+            width: 140.w,
+            height: 110.w,
+            image: NetworkImage(insideimage)),
+        Container(
+          padding: EdgeInsets.only(left: 10.w),
+          width: 250.w,
+          child: Text(
+            insidetext,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 5,
             style: GoogleFonts.notoSerifMalayalam(
                 fontSize: 20.sp, fontWeight: FontWeight.w500),
           ),
@@ -97,44 +133,78 @@ class keralacontainer extends StatelessWidget {
 }
 
 class programesvideocontainer extends StatelessWidget {
-  const programesvideocontainer({
-    Key? key,
-  }) : super(key: key);
+  final index;
+  programesvideocontainer({Key? key, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: kblackcolor,
-      width: 220.w,
-      height: 220 * (9 / 16).w,
-    );
+    return StreamBuilder(
+        stream: FirebaseFirestore.instance.collection('programme').snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return CircularProgressIndicator();
+          }
+          if (!snapshot.hasData) {
+            return Center(
+              child: Text(
+                'Data not available',
+              ),
+            );
+          }
+          final data =
+              programmemodel.fromMap(snapshot.data!.docs[index].data());
+          final url = data.programmeyoutubeurl;
+          return GestureDetector(
+            onTap: () => launchUrl(Uri.parse(url!)),
+            child: Container(
+              color: kblackcolor,
+              width: 220.w,
+              height: 220 * (9 / 16).w,
+              child: Image(
+                fit: BoxFit.cover,
+                image: NetworkImage(data.programmeimageurl!),
+              ),
+            ),
+          );
+        });
   }
 }
 
-class national_container extends StatelessWidget {
-  const national_container({
-    Key? key,
-  }) : super(key: key);
+class nationalcontainer extends StatelessWidget {
+  String nationalimage;
+  String nationaltext;
+  String nationaldiscription;
+  nationalcontainer(
+      {Key? key,
+      required this.nationalimage,
+      required this.nationaltext,
+      required this.nationaldiscription})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 360.w,
+      height: 300.w,
       width: 280.w,
       color: Color.fromARGB(255, 255, 255, 255),
       child: Column(
         children: [
-          const Image(image: AssetImage('assets/nepal-edited.jpg')),
+          Image(
+              height: 150.w,
+              width: 280.w,
+              fit: BoxFit.cover,
+              image: NetworkImage(nationalimage)),
           SizedBox(
             height: 8.w,
           ),
           Text(
-            ktext,
+            nationaltext,
             style: GoogleFonts.notoSerifMalayalam(
                 fontSize: 22.sp, fontWeight: FontWeight.w500),
+            maxLines: 3,
           ),
           Text(
-            ktextnews,
+            nationaldiscription,
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             style: GoogleFonts.notoSerifMalayalam(
@@ -179,10 +249,10 @@ class tablewidget extends StatelessWidget {
             onTap: () => Get.offAll(() => homePage()),
             child: const tablecontent(title: 'HOME'),
           ),
-          GestureDetector(
-            onTap: () => Get.to(() => Videoscreen()),
-            child: const tablecontent(title: 'VIDEOS'),
-          ),
+          // GestureDetector(
+          //   onTap: () => Get.to(() => Videoscreen()),
+          //   child: const tablecontent(title: 'VIDEOS'),
+          // ),
           GestureDetector(
               onTap: () => Get.to(() => Categoryscreenkasargod()),
               child: const tablecontent(title: 'KASARAGOD')),
@@ -192,7 +262,9 @@ class tablewidget extends StatelessWidget {
           GestureDetector(
               onTap: () => Get.to(() => Categoryscreennational()),
               child: const tablecontent(title: 'NATIONAL')),
-          const tablecontent(title: 'PROGRAME'),
+          GestureDetector(
+              onTap: () => Get.to(() => programmescreen()),
+              child: tablecontent(title: 'PROGRAME')),
           SizedBox(
             width: 180.w,
           ),
@@ -245,8 +317,8 @@ class headwidget extends StatelessWidget {
                   style:
                       TextStyle(fontSize: 52.sp, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(
-                  width: 5,
+                SizedBox(
+                  width: 5.w,
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -273,18 +345,26 @@ class headwidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Icon(
-                  Icons.facebook,
-                  size: 24.sp,
+                GestureDetector(
+                  onTap: () => launchUrl(Uri.parse(
+                      'https://www.facebook.com/citychannel.kanhangad.5?mibextid=LQQJ4d')),
+                  child: Icon(
+                    Icons.facebook,
+                    size: 24.sp,
+                  ),
                 ),
                 FaIcon(
                   FontAwesomeIcons.whatsapp,
                   size: 24.sp,
                 ),
                 // GestureDetector(onTap: () => Get.to(YoutubeAppDemo()),
-                FaIcon(
-                  FontAwesomeIcons.youtube,
-                  size: 24.sp,
+                GestureDetector(
+                  onTap: () => launchUrl(
+                      Uri.parse('https://www.youtube.com/@citynewskhd')),
+                  child: FaIcon(
+                    FontAwesomeIcons.youtube,
+                    size: 24.sp,
+                  ),
                 ),
                 // ),
                 FaIcon(
@@ -308,8 +388,8 @@ class headwidget extends StatelessWidget {
                     color: kwhitecolor,
                     size: 24.sp,
                   ),
-                  const SizedBox(
-                    width: 10,
+                  SizedBox(
+                    width: 10.w,
                   ),
                   Text(
                     'LIVE TV',
@@ -317,7 +397,7 @@ class headwidget extends StatelessWidget {
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
                         color: kwhitecolor,
-                        letterSpacing: 2),
+                        letterSpacing: 2.w),
                   )
                 ],
               ),
